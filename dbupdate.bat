@@ -1,0 +1,3 @@
+@echo off
+docker exec -it ubuntu_api_1 sh dumpdb/dbexport.sh
+docker exec -it ubuntu_db_1 sh dumpdb/dbimport.sh

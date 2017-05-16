@@ -1,0 +1,34 @@
+version: "2"
+services:
+  api:
+    build: .
+    ports:
+     - "80:80"
+    env_file:
+     - api.env
+    restart: always
+    command:  bash -c "php /var/www/apibim/robo.phar composer --load-from /var/www/apibim/ && /usr/sbin/apache2 -D FOREGROUND"
+    depends_on:
+     - db
+    volumes:
+     - ${DIR}/data/repos/youbim_v4:/var/www/apibim
+     - ${DIR}/dumpdb:/dumpdb
+    environment:
+      DB_HOST: db
+      DB_USER: root
+      DB_PASSWORD: root
+      DATABASE: youbim
+  db:
+    image: mysql:5.7
+    restart: always
+    ports:
+     - "3306:3306"
+    volumes:
+     - ${DIR}/dumpdb:/dumpdb
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: youbim
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+volumes:
+    dumpdb:
