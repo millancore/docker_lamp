@@ -3,7 +3,8 @@ services:
   api:
     build: .
     ports:
-     - "80:80"
+     - "8080:80"
+     - "8081:81"
     env_file:
      - api.env
     restart: always
@@ -12,6 +13,7 @@ services:
      - db
     volumes:
      - ${DIR}/data/repos/youbim_v4:/var/www/apibim
+     - ${DIR}/cdn:/var/www/youbim
      - ${DIR}/dumpdb:/dumpdb
     environment:
       DB_HOST: db
